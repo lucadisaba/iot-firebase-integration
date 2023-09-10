@@ -1,0 +1,3 @@
+ AIzaSyB1JVNePmxvSlLnzPjhkC2_j2o-0E04_Jk 
+ 
+ Database header URL: https://bindingmqttfirebase-default-rtdb.europe-west1.firebasedatabase.app/

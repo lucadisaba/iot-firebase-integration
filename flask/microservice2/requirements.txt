@@ -1,0 +1,3 @@
+Flask
+Firebase_admin
+uuid

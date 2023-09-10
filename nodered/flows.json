@@ -1,0 +1,3010 @@
+[
+    {
+        "id": "2f389b627abce8fd",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1ff7eab9b5ab3b02",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "50eba6fac0d3c0ca",
+        "type": "mqtt-broker",
+        "name": "MQTT",
+        "broker": "mqtt",
+        "port": "1884",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "65f5f7c7.2e135",
+        "type": "mqtt-broker",
+        "name": "MyBroker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "/#",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "a928ba0.2d1f748",
+        "type": "mqtt-broker",
+        "name": "MQTT2",
+        "broker": "mqtt2",
+        "port": "1885",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ef32ba25c3cdc55e",
+        "type": "coap-server",
+        "name": "CoAP-Server",
+        "port": "5683",
+        "ipv6": false
+    },
+    {
+        "id": "b32782ab60ee55d5",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate heart rate ",
+        "func": "function simulateHeartRate() {\n    const mean = msg.payload; // mean value for heart rate\n    const sd = 10; // standard deviation for for heart rate\n    const randomValue = (Math.random() * 2 - 1) + (Math.random() * 2 - 1) + (Math.random() * 2 - 1); // sum of three random values between -1 and 1\n    const hr = Math.round((mean + sd * randomValue) * 10) / 10; // round to one decimal place\n    return hr;\n}\n\nmsg.payload = JSON.stringify({\n    \"topic\": \"sensors/healthMonitor/heartRateMonitor/heartRate\",\n    \"sensor_value\": simulateHeartRate()\n    });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1650,
+        "y": 120,
+        "wires": [
+            [
+                "a76dbd37013312c1",
+                "4859d8483ff6743b",
+                "e53a678ad5eda3b8"
+            ]
+        ]
+    },
+    {
+        "id": "a76dbd37013312c1",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "sensors/healthMonitor/heartRateMonitor/heartRate",
+        "topic": "sensors/healthMonitor/heartRateMonitor/heartRate",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 1790,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "4859d8483ff6743b",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2220,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "2fab840acdfb02b6",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 580,
+        "wires": [
+            [
+                "2f02bfd7712e528b",
+                "fc010aaacdfda31c",
+                "aaab04f1022382ac",
+                "64e33622cfe8d3ea",
+                "6022634770082926",
+                "d8285e4ae16090d4",
+                "b48fb95d34f1460e",
+                "be54483094909c73",
+                "574aae4c7decf633",
+                "d8bb6efb6dd2c17c",
+                "a2a456dae9df99b6",
+                "b4e33aa276e1cdec",
+                "461465deb1672ed7",
+                "eb918fc32fbfa763",
+                "96cc0c6cd0df7857",
+                "062e8f3ab1a84d09",
+                "774f4092b98a7ae6",
+                "a2b28b8c6e508d06",
+                "dbdd700d138be286",
+                "e92d0e7a98f5b381",
+                "868b5beca92a84cf",
+                "1152eba314e2e0e9",
+                "1dcc433d1f2cb580",
+                "10e28f2c18d58529",
+                "4382822ebadf3d02",
+                "7c124cae7dcfd99f",
+                "be9f2bfbdd0c0dae",
+                "1905a23a01f7d59b",
+                "c9a534a2ed125f68",
+                "798ca31cfa315404",
+                "cc00aefd4d2fb4e0",
+                "4a9023088d8476b3"
+            ]
+        ]
+    },
+    {
+        "id": "2f02bfd7712e528b",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "3.0",
+        "func": "msg.payload = \"3.0\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 100,
+        "wires": [
+            [
+                "a89945fe80081bcf"
+            ]
+        ]
+    },
+    {
+        "id": "a89945fe80081bcf",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/$homie",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 670,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c5829c0b1a55eb47",
+        "type": "comment",
+        "z": "2f389b627abce8fd",
+        "name": "Health Monitor",
+        "info": "",
+        "x": 490,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "fc010aaacdfda31c",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "HealtMonitor",
+        "func": "msg.payload = \"HealtMonitor\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "b73c9937f08e505f"
+            ]
+        ]
+    },
+    {
+        "id": "b73c9937f08e505f",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 670,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "aaab04f1022382ac",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "ready",
+        "func": "msg.payload = \"ready\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 180,
+        "wires": [
+            [
+                "74526d24d029d695"
+            ]
+        ]
+    },
+    {
+        "id": "74526d24d029d695",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/$state",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 680,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "64e33622cfe8d3ea",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "JS Object nodes",
+        "func": "msg.payload = [\"heartRateMonitor\",\"bloodPressureMonitor\",\"bodyTemperatureMonitor\",\"glycemiaMonitor\"];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "9fec768adcca77ef"
+            ]
+        ]
+    },
+    {
+        "id": "9fec768adcca77ef",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/$nodes",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 670,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6022634770082926",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "heartRateMonitor",
+        "func": "msg.payload = \"heartRateMonitor\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 340,
+        "wires": [
+            [
+                "4358e326cc5098a9"
+            ]
+        ]
+    },
+    {
+        "id": "4358e326cc5098a9",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/heartRateMonitor/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 680,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "2f9d7c99b37915ea",
+        "type": "comment",
+        "z": "2f389b627abce8fd",
+        "name": "Heart Rate Monitor",
+        "info": "",
+        "x": 470,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "d8285e4ae16090d4",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "heartRate",
+        "func": "msg.payload = \"heartRate\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 380,
+        "wires": [
+            [
+                "ea33711bf811d35b"
+            ]
+        ]
+    },
+    {
+        "id": "ea33711bf811d35b",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/heartRateMonitor/$properties",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 660,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b48fb95d34f1460e",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Heart Rate",
+        "func": "msg.payload = \"Heart Rate\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 460,
+        "wires": [
+            [
+                "6ff5983605c3ef6f"
+            ]
+        ]
+    },
+    {
+        "id": "6ff5983605c3ef6f",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/heartRateMonitor/heartRate/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 700,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "be54483094909c73",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "BPM",
+        "func": "msg.payload = \"BPM\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 500,
+        "wires": [
+            [
+                "9b216a29414491c3"
+            ]
+        ]
+    },
+    {
+        "id": "9b216a29414491c3",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/heartRateMonitor/heartRate/$unit",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 650,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "574aae4c7decf633",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "integer",
+        "func": "msg.payload = \"integer\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 540,
+        "wires": [
+            [
+                "93f2945eb05c8cc3"
+            ]
+        ]
+    },
+    {
+        "id": "93f2945eb05c8cc3",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/heartRateMonitor/heartRate/$datatype",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 710,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "b4e33aa276e1cdec",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "false",
+        "func": "msg.payload = \"false\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 580,
+        "wires": [
+            [
+                "383f703f0e6b45b1"
+            ]
+        ]
+    },
+    {
+        "id": "383f703f0e6b45b1",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/heartRateMonitor/heartRate/$settable",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 660,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d8bb6efb6dd2c17c",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "bloodRateMonitor",
+        "func": "msg.payload = \"bloodRateMonitor\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 700,
+        "wires": [
+            [
+                "db5bb6f3f597d172"
+            ]
+        ]
+    },
+    {
+        "id": "db5bb6f3f597d172",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 700,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "57f3b03d81e53d9a",
+        "type": "comment",
+        "z": "2f389b627abce8fd",
+        "name": "Blood Pressure Monitor",
+        "info": "",
+        "x": 460,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3c752b73b14e62d6",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/$properties",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 710,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "461465deb1672ed7",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Systolic Pression",
+        "func": "msg.payload = \"Systolic Pression\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 820,
+        "wires": [
+            [
+                "0c766345f082f31b"
+            ]
+        ]
+    },
+    {
+        "id": "0c766345f082f31b",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/systolic/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 700,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "eb918fc32fbfa763",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "mmHg",
+        "func": "msg.payload = \"mmHg\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 860,
+        "wires": [
+            [
+                "3574f16ad15e08db"
+            ]
+        ]
+    },
+    {
+        "id": "3574f16ad15e08db",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/systolic/$unit",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 660,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "96cc0c6cd0df7857",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "integer",
+        "func": "msg.payload = \"integer\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 900,
+        "wires": [
+            [
+                "4002f41d77c4a43b"
+            ]
+        ]
+    },
+    {
+        "id": "4002f41d77c4a43b",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/systolic/$datatype",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 710,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "062e8f3ab1a84d09",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "false",
+        "func": "msg.payload = \"false\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 940,
+        "wires": [
+            [
+                "0359d5cb223b07a0"
+            ]
+        ]
+    },
+    {
+        "id": "0359d5cb223b07a0",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/systolic/$settable",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 670,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "774f4092b98a7ae6",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Diastolic Pression",
+        "func": "msg.payload = \"Diastolic Pression\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 1000,
+        "wires": [
+            [
+                "1034f45773cf7412"
+            ]
+        ]
+    },
+    {
+        "id": "1034f45773cf7412",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/diastolic/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 690,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "a2b28b8c6e508d06",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "mmHg",
+        "func": "msg.payload = \"mmHg\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1040,
+        "wires": [
+            [
+                "adfc59af55764539"
+            ]
+        ]
+    },
+    {
+        "id": "adfc59af55764539",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/diastolic/$unit",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 650,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "dbdd700d138be286",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "integer",
+        "func": "msg.payload = \"integer\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 1080,
+        "wires": [
+            [
+                "409e4c1273a41e52"
+            ]
+        ]
+    },
+    {
+        "id": "409e4c1273a41e52",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/diastolic/$datatype",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 710,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "e92d0e7a98f5b381",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "false",
+        "func": "msg.payload = \"false\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1120,
+        "wires": [
+            [
+                "1846c2538ac76205"
+            ]
+        ]
+    },
+    {
+        "id": "1846c2538ac76205",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/dìastolic/$settable",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 660,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "a2a456dae9df99b6",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "JS Object properties",
+        "func": "msg.payload = [\"systolic\", \"dyastolic\"]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 740,
+        "wires": [
+            [
+                "3c752b73b14e62d6"
+            ]
+        ]
+    },
+    {
+        "id": "868b5beca92a84cf",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "bodyTemperatureMonitor",
+        "func": "msg.payload = \"bodyTemperatureMonitor\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1240,
+        "wires": [
+            [
+                "006b5aee3e741c56"
+            ]
+        ]
+    },
+    {
+        "id": "006b5aee3e741c56",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bodyTemperatureMonitor/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 750,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "24e0159088197a44",
+        "type": "comment",
+        "z": "2f389b627abce8fd",
+        "name": "Body Temperature Monitor",
+        "info": "",
+        "x": 470,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "1152eba314e2e0e9",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "temperature",
+        "func": "msg.payload = \"temperature\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 1280,
+        "wires": [
+            [
+                "620324791343ebc0"
+            ]
+        ]
+    },
+    {
+        "id": "620324791343ebc0",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bodyTemperatureMonitor/$properties",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 680,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "1dcc433d1f2cb580",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Body Temperature",
+        "func": "msg.payload = \"Body Temperature\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 1360,
+        "wires": [
+            [
+                "0824a6c1b96f514c"
+            ]
+        ]
+    },
+    {
+        "id": "0824a6c1b96f514c",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bodyTemperatureMonitor/temperature/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 730,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "10e28f2c18d58529",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "°C",
+        "func": "msg.payload = \"°C\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1400,
+        "wires": [
+            [
+                "17135e93e6f8a72e"
+            ]
+        ]
+    },
+    {
+        "id": "17135e93e6f8a72e",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bodyTemperatureMonitor/temperature/$unit",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 680,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "4382822ebadf3d02",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "float",
+        "func": "msg.payload = \"float\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1440,
+        "wires": [
+            [
+                "d9ceab163628cc17"
+            ]
+        ]
+    },
+    {
+        "id": "d9ceab163628cc17",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bodyTemperatureMonitor/temperature/$datatype",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 740,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "7c124cae7dcfd99f",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "false",
+        "func": "msg.payload = \"false\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1480,
+        "wires": [
+            [
+                "cd4c36b4721071ea"
+            ]
+        ]
+    },
+    {
+        "id": "cd4c36b4721071ea",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/bodyTemperatureMonitor/temperature/$settable",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 700,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "be9f2bfbdd0c0dae",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "glycemiaMonitor",
+        "func": "msg.payload = \"glycemiaMonitor\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1600,
+        "wires": [
+            [
+                "7a9e9832c6c81818"
+            ]
+        ]
+    },
+    {
+        "id": "7a9e9832c6c81818",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/glycemiaMonitor/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 720,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "883c52517745f555",
+        "type": "comment",
+        "z": "2f389b627abce8fd",
+        "name": "Glycemia Monitor",
+        "info": "",
+        "x": 440,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "1905a23a01f7d59b",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "glycemia",
+        "func": "msg.payload = \"glycemia\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 1640,
+        "wires": [
+            [
+                "94759329a47ad99d"
+            ]
+        ]
+    },
+    {
+        "id": "94759329a47ad99d",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/glycemiaMonitor/$properties",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 650,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "c9a534a2ed125f68",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Glycemia",
+        "func": "msg.payload = \"Glycemia\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 1720,
+        "wires": [
+            [
+                "53b2da004feda8be"
+            ]
+        ]
+    },
+    {
+        "id": "53b2da004feda8be",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/glycemiaMonitor/glycemia/$name",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 690,
+        "y": 1720,
+        "wires": []
+    },
+    {
+        "id": "798ca31cfa315404",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "mg/dL",
+        "func": "msg.payload = \"mg/dL\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1760,
+        "wires": [
+            [
+                "23a00e0954e4f2b7"
+            ]
+        ]
+    },
+    {
+        "id": "23a00e0954e4f2b7",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/glycemiaMonitor/glycemia/$unit",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 640,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "cc00aefd4d2fb4e0",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "integer",
+        "func": "msg.payload = \"integer\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 1800,
+        "wires": [
+            [
+                "00c51b705aac2faa"
+            ]
+        ]
+    },
+    {
+        "id": "00c51b705aac2faa",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/glycemiaMonitor/glycemia/$datatype",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 700,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "4a9023088d8476b3",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "false",
+        "func": "msg.payload = \"false\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1840,
+        "wires": [
+            [
+                "d72b843946b61d37"
+            ]
+        ]
+    },
+    {
+        "id": "d72b843946b61d37",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/glycemiaMonitor/glycemia/$settable",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 660,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "0101f90a66b304e6",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate systolic sensor",
+        "func": "function simulateSystolic() {\n    const mean = msg.payload; // mean value for body temperature in °C\n    const sd = 10; // standard deviation for body temperature in °C\n    const randomValue = (Math.random() * 2 - 1) + (Math.random() * 2 - 1) + (Math.random() * 2 - 1); // sum of three random values between -1 and 1\n    const systolic = Math.round((mean + sd * randomValue) * 10) / 10; // round to one decimal place\n    return systolic;\n}\n\nmsg.payload = JSON.stringify({\n    \"topic\": \"sensors/healthMonitor/bloodPressureMonitor/systolic\",\n    \"sensor_value\": simulateSystolic()\n    });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1670,
+        "y": 220,
+        "wires": [
+            [
+                "fe78ed3b12930b13",
+                "4859d8483ff6743b",
+                "e53a678ad5eda3b8"
+            ]
+        ]
+    },
+    {
+        "id": "fe78ed3b12930b13",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "sensors/healthMonitor/bloodPressureMonitor/systolic",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/systolic",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 1800,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "99a4fc7e6b91f30c",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate diastolic sensor",
+        "func": "function simulateDiastolic() {\n    const mean = msg.payload;\n    const sd = 5; // standard deviation \n    const randomValue = (Math.random() * 2 - 1) + (Math.random() * 2 - 1) + (Math.random() * 2 - 1); // sum of three random values between -1 and 1\n    const diastolic = Math.round((mean + sd * randomValue) * 10) / 10; // round to one decimal place\n    return diastolic;\n}\n\nmsg.payload = JSON.stringify({\n    \"topic\": \"sensors/healthMonitor/bloodPressureMonitor/diastolic\",\n    \"sensor_value\": simulateDiastolic()\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1670,
+        "y": 320,
+        "wires": [
+            [
+                "fd508f28929a0e1d",
+                "4859d8483ff6743b",
+                "e53a678ad5eda3b8"
+            ]
+        ]
+    },
+    {
+        "id": "fd508f28929a0e1d",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "sensors/healthMonitor/bloodPressureMonitor/diastolic",
+        "topic": "sensors/healthMonitor/bloodPressureMonitor/diastolic",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 1790,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d0a2d1988b8d23f9",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate body temperature sensor",
+        "func": "function simulateBodyTemperature() {\n    const mean = msg.payload; // mean value for body temperature in °C\n    const sd = 0.5; // standard deviation for body temperature in °C\n    const randomValue = (Math.random() * 2 - 1) + (Math.random() * 2 - 1) + (Math.random() * 2 - 1); // sum of three random values between -1 and 1\n    const bodyTemperature = Math.round((mean + sd * randomValue) * 10) / 10; // round to one decimal place\n    return bodyTemperature;\n}\n\nmsg.payload = JSON.stringify({\n    \"topic\": \"sensors/healthMonitor/bodyTemperatureMonitor/temperature\",\n    \"sensor_value\": simulateBodyTemperature()\n    });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1680,
+        "y": 420,
+        "wires": [
+            [
+                "e2d3ce77959bf245",
+                "4859d8483ff6743b",
+                "e53a678ad5eda3b8"
+            ]
+        ]
+    },
+    {
+        "id": "e2d3ce77959bf245",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "sensors/healthMonitor/bodyTemperatureMonitor/temperature",
+        "topic": "sensors/healthMonitor/bodyTemperatureMonitor/temperature",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 1780,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6acad7352fea86fd",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate glycemia sensor",
+        "func": "function simulateGlycemia() {\n    const mean = msg.payload; // mean value for glycemia\n    const sd = 10; // standard deviation for glycemia\n    const randomValue = (Math.random() * 2 - 1) + (Math.random() * 2 - 1) + (Math.random() * 2 - 1); // sum of three random values between -1 and 1\n    const glycemiaValue = Math.round((mean + sd * randomValue) * 10) / 10; // round to one decimal place\n    return glycemiaValue;\n}\n\nmsg.payload = JSON.stringify({\n    \"topic\": \"sensors/healthMonitor/glycemiaMonitor/glycemia\",\n    \"sensor_value\": simulateGlycemia()\n    });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1650,
+        "y": 520,
+        "wires": [
+            [
+                "f51289bd92ff7b64",
+                "4859d8483ff6743b",
+                "e53a678ad5eda3b8"
+            ]
+        ]
+    },
+    {
+        "id": "f51289bd92ff7b64",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "sensors/healthMonitor/glycemiaMonitor/glycemia",
+        "topic": "sensors/healthMonitor/glycemiaMonitor/glycemia",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 1800,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "1298c1645adddfd0",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Check Disease",
+        "func": "if (msg.payload.tachycardia){\n    msg.payload = 120\n}\nelse{\n    msg.payload = 80\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 120,
+        "wires": [
+            [
+                "b32782ab60ee55d5"
+            ]
+        ]
+    },
+    {
+        "id": "1ac9163f488a9e0f",
+        "type": "mqtt in",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "diseases",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "50eba6fac0d3c0ca",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1080,
+        "y": 320,
+        "wires": [
+            [
+                "4e78326fec9b2d9e",
+                "1298c1645adddfd0",
+                "243ed835b9f81761",
+                "43d67e529d87861c",
+                "afd8d34abf50e2cb",
+                "cd8918fd56580e8e",
+                "8a1759ff1833bf59",
+                "0a54b37ccb2cd249"
+            ]
+        ]
+    },
+    {
+        "id": "4e78326fec9b2d9e",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "c2a0aed2426cd3ec",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "diseases",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 2420,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "6d1ef55ea5db12c5",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate Diseases",
+        "func": "let realtime = global.get(\"realtime\");\nif (realtime === msg.payload)\n    return msg;\nelse {\n    msg.payload = realtime;\n    return msg;\n}\n    ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1910,
+        "y": 580,
+        "wires": [
+            [
+                "c2a0aed2426cd3ec"
+            ]
+        ]
+    },
+    {
+        "id": "243ed835b9f81761",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Check Disease",
+        "func": "if (msg.payload.highPressure){\n    msg.payload = 150\n}\nelse{\n    msg.payload = 100\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 220,
+        "wires": [
+            [
+                "0101f90a66b304e6"
+            ]
+        ]
+    },
+    {
+        "id": "43d67e529d87861c",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Check Disease",
+        "func": "if (msg.payload.highPressure){\n    msg.payload = 100\n}\nelse{\n    msg.payload = 80\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 320,
+        "wires": [
+            [
+                "99a4fc7e6b91f30c"
+            ]
+        ]
+    },
+    {
+        "id": "afd8d34abf50e2cb",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Check Disease",
+        "func": "if (msg.payload.fever){\n    msg.payload = 39\n}\nelse{\n    msg.payload = 36.5\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 420,
+        "wires": [
+            [
+                "d0a2d1988b8d23f9"
+            ]
+        ]
+    },
+    {
+        "id": "cd8918fd56580e8e",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Check Disease",
+        "func": "if (msg.payload.diabetes){\n    msg.payload = 220\n}\nelse{\n    msg.payload = 85\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 520,
+        "wires": [
+            [
+                "6acad7352fea86fd"
+            ]
+        ]
+    },
+    {
+        "id": "8a1759ff1833bf59",
+        "type": "delay",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1380,
+        "y": 580,
+        "wires": [
+            [
+                "6d1ef55ea5db12c5"
+            ]
+        ]
+    },
+    {
+        "id": "0a54b37ccb2cd249",
+        "type": "change",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "realtime",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1390,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "de5d63f01e6ba72f",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "50eba6fac0d3c0ca",
+        "x": 2500,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e53a678ad5eda3b8",
+        "type": "join",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "payload",
+        "joiner": ",",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "5",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 2210,
+        "y": 440,
+        "wires": [
+            [
+                "1c5c39adb455d98b",
+                "de5d63f01e6ba72f"
+            ]
+        ]
+    },
+    {
+        "id": "1c5c39adb455d98b",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2500,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "3abbcb625685d55d",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1.5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1810,
+        "y": 700,
+        "wires": [
+            [
+                "d42b353e7094ab65"
+            ]
+        ]
+    },
+    {
+        "id": "d42b353e7094ab65",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Change Diseases",
+        "func": "msg.payload = JSON.stringify({\n    \"tachycardia\": false,\n    \"highPressure\": false,\n    \"fever\": false,\n    \"diabetes\": false\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2110,
+        "y": 700,
+        "wires": [
+            [
+                "844d56a77ebaa05b",
+                "c2a0aed2426cd3ec"
+            ]
+        ]
+    },
+    {
+        "id": "844d56a77ebaa05b",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2360,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "30a7e8117e5e8255",
+        "type": "comment",
+        "z": "2f389b627abce8fd",
+        "name": "Pedometer Monitor HTTP",
+        "info": "",
+        "x": 1600,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "013d5d1fa83ffa2a",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate pedometer sensor -> internal HTTP server",
+        "func": "let newStep = global.get(\"steps\");\nif (newStep < 4500) {\n    global.set(\"steps\", ++newStep);\n    msg.payload = JSON.stringify({\n        \"url\": \"sensors/healthMonitor/pedometerMonitor/steps\",\n        \"sensor_value\": global.get(\"steps\")\n        });\n        return msg;   \n}\nglobal.set(\"steps\", 0)\nmsg.payload = JSON.stringify({\n    \"url\": \"sensors/healthMonitor/pedometerMonitor/steps\",\n    \"sensor_value\": global.get(\"steps\")\n});\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1550,
+        "y": 1700,
+        "wires": [
+            [
+                "aba7c183f61da202",
+                "3fea96c99f486cae"
+            ]
+        ]
+    },
+    {
+        "id": "8a7ec94a173f2640",
+        "type": "change",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "steps",
+                "pt": "global",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1420,
+        "y": 1580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad224d0eb163d581",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1250,
+        "y": 1580,
+        "wires": [
+            [
+                "8a7ec94a173f2640"
+            ]
+        ]
+    },
+    {
+        "id": "e7207ee356a53032",
+        "type": "comment",
+        "z": "2f389b627abce8fd",
+        "name": "Body fat Monitor COAP",
+        "info": "",
+        "x": 1520,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "788c76054c4f945d",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1250,
+        "y": 2140,
+        "wires": [
+            [
+                "a89a1bcd5adb8f0e"
+            ]
+        ]
+    },
+    {
+        "id": "a89a1bcd5adb8f0e",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate body fat sensor -> internal COAP server",
+        "func": "let newBodyFat = global.get(\"bodyFat\");\nif (newBodyFat < 16) {\n    global.set(\"bodyFat\", ++newBodyFat);\n    msg.payload = JSON.stringify({\n        \"url\": \"sensors/healthMonitor/bodyFatMonitor/bodyfat\",\n        \"sensor_value\": global.get(\"bodyFat\")\n    });\n    return msg;    \n}\nglobal.set(\"bodyFat\", 12)\nmsg.payload = JSON.stringify({\n    \"url\": \"sensors/healthMonitor/bodyFatMonitor/bodyfat\",\n    \"sensor_value\": global.get(\"bodyFat\")\n});\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1540,
+        "y": 2140,
+        "wires": [
+            [
+                "2d9ed9379bdc0497"
+            ]
+        ]
+    },
+    {
+        "id": "e10d0db2cebd2cf4",
+        "type": "change",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "bodyFat",
+                "pt": "global",
+                "to": "13",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1520,
+        "y": 2020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4e25919e02b1c90d",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1250,
+        "y": 2020,
+        "wires": [
+            [
+                "e10d0db2cebd2cf4"
+            ]
+        ]
+    },
+    {
+        "id": "5e958613493a3e61",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Get pedometer json",
+        "func": "msg.payload = JSON.stringify({\n    \"url\": \"sensors/healthMonitor/pedometerMonitor/steps\",\n    \"sensor_value\": global.get(\"steps\")\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1700,
+        "y": 1780,
+        "wires": [
+            [
+                "3fea96c99f486cae",
+                "9cb00ac6aecbcf77"
+            ]
+        ]
+    },
+    {
+        "id": "3fea96c99f486cae",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1940,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "9cb00ac6aecbcf77",
+        "type": "http response",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 1930,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "68e2f468eb08b60f",
+        "type": "http request",
+        "z": "2f389b627abce8fd",
+        "name": "http internal request test",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://127.0.0.1:1880/sensors/healthMonitor/pedometerMonitor/steps",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1510,
+        "y": 1860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3cee617f2a753753",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1240,
+        "y": 1860,
+        "wires": [
+            [
+                "68e2f468eb08b60f"
+            ]
+        ]
+    },
+    {
+        "id": "e644b866e5c7a289",
+        "type": "coap in",
+        "z": "2f389b627abce8fd",
+        "method": "GET",
+        "name": "",
+        "server": "ef32ba25c3cdc55e",
+        "url": "/sensors/healthMonitor/bodyFatMonitor/bodyFat",
+        "x": 1370,
+        "y": 2260,
+        "wires": [
+            [
+                "6a2e189f7eb69b6c"
+            ]
+        ]
+    },
+    {
+        "id": "de30b88f7bef4eb6",
+        "type": "coap response",
+        "z": "2f389b627abce8fd",
+        "name": "coap response",
+        "statusCode": "",
+        "contentFormat": "application/json",
+        "x": 2040,
+        "y": 2280,
+        "wires": []
+    },
+    {
+        "id": "6a2e189f7eb69b6c",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Get body fat json",
+        "func": "msg.payload = JSON.stringify({\n    \"url\": \"sensors/healthMonitor/bodyFatMonitor/bodyFat\",\n    \"sensor_value\": global.get(\"bodyFat\")\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1770,
+        "y": 2260,
+        "wires": [
+            [
+                "b1e47942b440bb04",
+                "de30b88f7bef4eb6"
+            ]
+        ]
+    },
+    {
+        "id": "a5369dce4520e008",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1240,
+        "y": 2380,
+        "wires": [
+            [
+                "12b841b1f2bfedcd"
+            ]
+        ]
+    },
+    {
+        "id": "12b841b1f2bfedcd",
+        "type": "coap request",
+        "z": "2f389b627abce8fd",
+        "method": "GET",
+        "confirmable": true,
+        "observe": false,
+        "multicast": false,
+        "multicastTimeout": 20000,
+        "url": "coap://127.0.0.1:5683/sensors/healthMonitor/bodyFatMonitor/bodyFat",
+        "content-format": "application/json",
+        "raw-buffer": false,
+        "name": "coap internal request test",
+        "x": 1490,
+        "y": 2380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b1e47942b440bb04",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2040,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "f49654bb083a47d0",
+        "type": "http request",
+        "z": "2f389b627abce8fd",
+        "name": "POST http://flask-IoTResourceManagement:5001/mqtt",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://flask-IoTResourceManagement:5001/mqtt",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1840,
+        "y": 1200,
+        "wires": [
+            [
+                "563f9d8a62cf1a53"
+            ]
+        ]
+    },
+    {
+        "id": "e11ea15f44bd4916",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Function Mqtt Configuration",
+        "func": "msg.payload = JSON.stringify({\n    'brokerURL': 'mqtt',\n    'port': 1884,\n    'room': 'abc900',\n    'topics' : [\n        'sensors/healthMonitor/glycemiaMonitor/glycemia',\n        'sensors/healthMonitor/bodyTemperatureMonitor/temperature',\n        'sensors/healthMonitor/bloodPressureMonitor/diastolic',\n        'sensors/healthMonitor/bloodPressureMonitor/systolic',\n        'sensors/healthMonitor/heartRateMonitor/heartRate'\n    ]\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 1160,
+        "wires": [
+            [
+                "f49654bb083a47d0"
+            ]
+        ]
+    },
+    {
+        "id": "5335b2cfb88f42ac",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1230,
+        "y": 1160,
+        "wires": [
+            [
+                "e11ea15f44bd4916"
+            ]
+        ]
+    },
+    {
+        "id": "563f9d8a62cf1a53",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2190,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "bfa37b2d2d91db8a",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1230,
+        "y": 1360,
+        "wires": [
+            [
+                "935a928599abb378"
+            ]
+        ]
+    },
+    {
+        "id": "935a928599abb378",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Function Mqtt FirebaseWriter",
+        "func": "msg.payload = JSON.stringify({\n    'glycemia': 53,\n    'room' : 'xyz100'\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1410,
+        "y": 1440,
+        "wires": [
+            [
+                "cdd09824297ed56d"
+            ]
+        ]
+    },
+    {
+        "id": "cdd09824297ed56d",
+        "type": "http request",
+        "z": "2f389b627abce8fd",
+        "name": "POST http://flask-FirebaseWriter:5002/mqtt",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask-FirebaseWriter:5002/mqtt",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1770,
+        "y": 1440,
+        "wires": [
+            [
+                "8376549a126d637c"
+            ]
+        ]
+    },
+    {
+        "id": "8376549a126d637c",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1910,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "831aa2af07bdd4de",
+        "type": "mqtt out",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "topic": "sensors/healthMonitor/skinMoistureMonitor/skinMoisture",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "a928ba0.2d1f748",
+        "x": 1780,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "c2c561d88f440d38",
+        "type": "change",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "skinMoisture",
+                "pt": "global",
+                "to": "30",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1740,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eb6f1e145528d1d3",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1510,
+        "y": 880,
+        "wires": [
+            [
+                "c2c561d88f440d38"
+            ]
+        ]
+    },
+    {
+        "id": "18bb58fb316389f9",
+        "type": "comment",
+        "z": "2f389b627abce8fd",
+        "name": "Skin Moisture Monitor MQTT2",
+        "info": "",
+        "x": 1750,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "4b38bf777af4cdad",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1510,
+        "y": 940,
+        "wires": [
+            [
+                "4341621c692404bc"
+            ]
+        ]
+    },
+    {
+        "id": "4341621c692404bc",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Simulate skin moisture sensor",
+        "func": "let newMoisture = global.get(\"skinMoisture\");\nif (newMoisture < 70) {\n    global.set(\"skinMoisture\", ++newMoisture);\n    msg.payload = JSON.stringify({\n        \"topic\": \"sensors/healthMonitor/skinMoistureMonitor/skinMoisture\",\n        \"sensor_value\": global.get(\"skinMoisture\")\n    });\n    return msg;    \n}\nglobal.set(\"skinMoisture\", 30)\nmsg.payload = JSON.stringify({\n    \"topic\": \"sensors/healthMonitor/skinMoistureMonitor/skinMoisture\",\n    \"sensor_value\": global.get(\"skinMoisture\")\n});\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1770,
+        "y": 940,
+        "wires": [
+            [
+                "831aa2af07bdd4de",
+                "99e604f92c806f7c"
+            ]
+        ]
+    },
+    {
+        "id": "99e604f92c806f7c",
+        "type": "debug",
+        "z": "2f389b627abce8fd",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2020,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "f0b546e3a56c58cc",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1230,
+        "y": 1260,
+        "wires": [
+            [
+                "6a45a771520b4936"
+            ]
+        ]
+    },
+    {
+        "id": "6a45a771520b4936",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Function Mqtt2 Configuration",
+        "func": "msg.payload = JSON.stringify({\n    'brokerURL': 'mqtt2',\n    'port': 1885,\n    'room': 'ghj500',\n    'topics' : [\n        'sensors/healthMonitor/skinMoistureMonitor/skinMoisture'\n    ]\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 1260,
+        "wires": [
+            [
+                "f49654bb083a47d0"
+            ]
+        ]
+    },
+    {
+        "id": "563a780bb8a2ed5f",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1240,
+        "y": 1640,
+        "wires": [
+            [
+                "89186004bf8523bf"
+            ]
+        ]
+    },
+    {
+        "id": "89186004bf8523bf",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Function HTTP Configuration",
+        "func": "msg.payload = JSON.stringify({\n    \"serverURL\": \"nodered\",\n    \"port\":\"1880\",\n    \"path\": \"sensors/healthMonitor/pedometerMonitor/steps\",\n    \"room\": \"ghj500\",\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1520,
+        "y": 1640,
+        "wires": [
+            [
+                "710da661f09762e5"
+            ]
+        ]
+    },
+    {
+        "id": "710da661f09762e5",
+        "type": "http request",
+        "z": "2f389b627abce8fd",
+        "name": "POST http://flask-IoTResourceManagement:5001/http",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask-IoTResourceManagement:5001/http",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1940,
+        "y": 1640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aba7c183f61da202",
+        "type": "http request",
+        "z": "2f389b627abce8fd",
+        "name": "PUT http://127.0.0.1:1880/sensors/healthMonitor/pedometerMonitor/steps",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://127.0.0.1:1880/sensors/healthMonitor/pedometerMonitor/steps",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 2100,
+        "y": 1700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5fe2cc569d461814",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "4",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1250,
+        "y": 1700,
+        "wires": [
+            [
+                "013d5d1fa83ffa2a"
+            ]
+        ]
+    },
+    {
+        "id": "e72e28e641e1e0c6",
+        "type": "http in",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "url": "/sensors/healthMonitor/pedometerMonitor/steps",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 1360,
+        "y": 1780,
+        "wires": [
+            [
+                "5e958613493a3e61"
+            ]
+        ]
+    },
+    {
+        "id": "07b697a2e8acdbac",
+        "type": "inject",
+        "z": "2f389b627abce8fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1240,
+        "y": 2080,
+        "wires": [
+            [
+                "9971812ae8b860d1"
+            ]
+        ]
+    },
+    {
+        "id": "9971812ae8b860d1",
+        "type": "function",
+        "z": "2f389b627abce8fd",
+        "name": "Function COAP Configuration",
+        "func": "msg.payload = JSON.stringify({\n    \"serverURL\": \"172.20.0.6\",\n    \"port\": 5683,\n    \"path\": \"sensors/healthMonitor/bodyFatMonitor/bodyFat\",\n    \"room\": \"abc900\"\n});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1480,
+        "y": 2080,
+        "wires": [
+            [
+                "9c0b01f282dce456"
+            ]
+        ]
+    },
+    {
+        "id": "2d9ed9379bdc0497",
+        "type": "coap request",
+        "z": "2f389b627abce8fd",
+        "method": "PUT",
+        "confirmable": true,
+        "observe": false,
+        "multicast": false,
+        "multicastTimeout": 20000,
+        "url": "coap://127.0.0.1:5683/sensors/healthMonitor/bodyFatMonitor/bodyFat",
+        "content-format": "application/json",
+        "raw-buffer": false,
+        "name": "PUT coap://127.0.0.1:5683/sensors/healthMonitor/bodyFatMonitor/bodyFat",
+        "x": 2040,
+        "y": 2140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c0b01f282dce456",
+        "type": "http request",
+        "z": "2f389b627abce8fd",
+        "name": "POST http://flask-IoTResourceManagement:5001/coap",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://flask-IoTResourceManagement:5001/coap",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1860,
+        "y": 2080,
+        "wires": [
+            []
+        ]
+    }
+]

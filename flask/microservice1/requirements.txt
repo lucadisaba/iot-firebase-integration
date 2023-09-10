@@ -1,0 +1,6 @@
+Flask
+paho-mqtt
+requests
+aiocoap
+aiohttp
+CoAPthon3

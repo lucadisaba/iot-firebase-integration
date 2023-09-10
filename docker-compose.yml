@@ -1,0 +1,66 @@
+version: '3.3'
+services:
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    restart: always
+    build:
+      context: ./nodered
+      dockerfile: Dockerfile
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered:/data
+    depends_on:
+      - mqtt
+      - mqtt2
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt
+    restart: always
+    ports:
+      - "1884:1884"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  mqtt2:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt2
+    restart: always
+    ports:
+      - "1885:1885"
+    volumes:
+      - ./mosquitto2/config:/mosquitto/config
+      - ./mosquitto2/data:/mosquitto/data
+      - ./mosquitto2/log:/mosquitto/log
+
+  flask-iotresourcemanagement:
+    container_name: flask-IoTResourceManagement
+    restart: always
+    build:
+      context: ./flask/microservice1
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./flask/microservice1:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  flask-firebasewriter:
+    container_name: flask-FirebaseWriter
+    restart: always
+    build:
+      context: ./flask/microservice2
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./flask/microservice2:/app
+    environment:
+      - PYTHONUNBUFFERED=1
